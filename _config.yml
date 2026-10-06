@@ -1,0 +1,12 @@
+title: 虚拟货币学习系统
+description: 从 0 到 1 的虚拟货币学习路径
+theme: just-the-docs
+url: https://lhk20060417-dev.github.io/crypto-learning
+
+aux_links:
+  "GitHub 仓库":
+    - "https://github.com/lhk20060417-dev/crypto-learning"
+
+search_enabled: true
+
+nav_sort: case_insensitive
