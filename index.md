@@ -4,9 +4,15 @@ title: 首页
 nav_order: 0
 ---
 
-# 虚拟货币学习系统
-
-从 0 到 1 的系统化学习路径。
+<div class="hero-wrap" style="position:relative;height:360px;border-radius:12px;overflow:hidden;margin-bottom:1.5rem;background:#080c16;">
+  <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;display:block;"></canvas>
+  <div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;pointer-events:none;text-align:center;padding:0 1rem;">
+    <div style="color:#e8f4ff;font-size:2.6rem;font-weight:700;letter-spacing:.35em;text-shadow:0 0 24px rgba(77,208,225,.55);">虚拟货币学习系统</div>
+    <div style="color:#4dd0e1;font-size:1rem;margin-top:.9rem;letter-spacing:.15em;text-shadow:0 0 12px rgba(77,208,225,.4);">从 0 到 1 的系统化学习路径</div>
+    <div style="color:#5a7fb0;font-size:.78rem;margin-top:1.4rem;letter-spacing:.3em;">CHAOS → STRUCTURE → VERIFY → RESET</div>
+  </div>
+</div>
+<script src="{{ '/hero-animation.js' | relative_url }}"></script>
 
 ## 学习阶段
 1. [第一阶段：认知地基](01-basics/)
@@ -14,6 +20,7 @@ nav_order: 0
 3. [第三阶段：交易策略全集](03-strategies/)
 4. [第四阶段：进阶与生态](04-advanced/)
 5. [第五阶段：实战与复盘](05-practice/)
+6. [附录：指标与理论大全](06-indicators/)
 
 ## 使用说明
 - 每节先看目标
@@ -76,3 +83,12 @@ nav_order: 0
 - [ ] 第 3 节：交易日志
 - [ ] 第 4 节：定期复盘
 - [ ] 第 5 节：迭代系统
+
+### 附录：指标与理论大全
+- [ ] 流动性
+- [ ] RSI
+- [ ] MACD
+- [ ] 布林带
+- [ ] 左侧交易 vs 右侧交易
+- [ ] 道氏理论
+- [ ] 江恩理论
