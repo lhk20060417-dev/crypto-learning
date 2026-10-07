@@ -9,8 +9,8 @@ permissions:
 
 jobs:
   analyze:
-    # 只有带「交易日志」标签的 issue 才会触发分析
-    if: contains(github.event.issue.labels.*.name, '交易日志')
+    # 带「交易日志」标签，或标题含「实盘分析」的 issue 才会触发分析
+    if: contains(github.event.issue.labels.*.name, '交易日志') || contains(github.event.issue.title, '实盘分析')
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -23,6 +23,7 @@ jobs:
       - name: 调用 DeepSeek 分析
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
         run: |
           python3 - <<'PY'
           import json, os, urllib.request
@@ -30,19 +31,32 @@ jobs:
           with open('/tmp/journal.md', encoding='utf-8') as f:
               journal = f.read()
 
-          system = (
-              "你是一位极其耐心的虚拟货币交易教练，专门教学0基础学员。"
-              "请用初学者能理解的语言，从消息面和技术面两个角度分析学员的交易想法，"
-              "指出其中的逻辑漏洞和可取之处，并给出具体的改进建议。"
-              "不要只说'对'或'错'，要解释'为什么'。"
-              "回复使用 Markdown 格式，控制在 500 字以内。"
-          )
+          title = os.environ.get("ISSUE_TITLE", "")
+
+          if "实盘分析" in title:
+              system = (
+                  "你是一位极其耐心的虚拟货币交易教练，正在分析学员的实盘交易数据。"
+                  "学员的交易画像（由本地画像系统长期累积）和最近的交易记录都在下面。"
+                  "请先指出学员最核心的问题，再给出一周内可以执行的具体改进动作。"
+                  "用初学者能理解的语言，不要空泛地说'保持良好心态'，要具体到仓位、止损、频率。"
+                  "回复使用 Markdown 格式，控制在 600 字以内。"
+              )
+              user = "我的交易画像与最近记录：\n" + journal + "\n\n请按我请求的两点分析。"
+          else:
+              system = (
+                  "你是一位极其耐心的虚拟货币交易教练，专门教学0基础学员。"
+                  "请用初学者能理解的语言，从消息面和技术面两个角度分析学员的交易想法，"
+                  "指出其中的逻辑漏洞和可取之处，并给出具体的改进建议。"
+                  "不要只说'对'或'错'，要解释'为什么'。"
+                  "回复使用 Markdown 格式，控制在 500 字以内。"
+              )
+              user = "我的交易记录：\n" + journal + "\n\n请帮我分析。"
 
           payload = {
               "model": "deepseek-flash",
               "messages": [
                   {"role": "system", "content": system},
-                  {"role": "user", "content": "我的交易记录：\n" + journal + "\n\n请帮我分析。"},
+                  {"role": "user", "content": user},
               ],
               "stream": False,
           }

@@ -5,20 +5,20 @@ nav_order: 0
 ---
 
 <style>
-.hero-wrap{position:relative;width:100vw;margin-left:calc(50% - 50vw);height:calc(100vh - 60px);min-height:540px;overflow:hidden;background:#070b14;}
+.hero-wrap{position:relative;width:100vw;margin-left:calc(50% - 50vw);height:calc(100vh - 60px);min-height:560px;overflow:hidden;background:#070b14;}
 #hero-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;}
-.hero-title{position:absolute;left:0;right:0;top:44%;transform:translateY(-50%);text-align:center;pointer-events:none;padding:0 1rem;}
-.hero-eyebrow{color:#3f5d85;font-size:.72rem;letter-spacing:.5em;margin-bottom:1.1rem;font-weight:600;}
-.hero-title h1{color:#e8f4ff;font-size:clamp(2rem,6vw,4.6rem);font-weight:700;letter-spacing:.22em;margin:0;text-shadow:0 0 34px rgba(77,208,225,.5);}
-.hero-title .sub{color:#4dd0e1;font-size:clamp(.85rem,1.6vw,1.1rem);margin-top:1.1rem;letter-spacing:.2em;text-shadow:0 0 14px rgba(77,208,225,.4);}
-.hero-title .motto{color:#54719e;font-size:.72rem;margin-top:1.6rem;letter-spacing:.42em;}
-.hero-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:7px;text-decoration:none;z-index:2;}
-.hero-node .dot{width:13px;height:13px;border-radius:50%;background:#0e1626;border:1.5px solid rgba(120,200,255,.55);box-shadow:0 0 12px rgba(96,225,255,.25);transition:all .35s ease;}
-.hero-node .tag{font-size:.85rem;color:#9db8de;letter-spacing:.1em;padding:4px 14px;border:1px solid rgba(120,180,255,.22);border-radius:999px;background:rgba(10,16,28,.6);backdrop-filter:blur(6px);transition:all .35s ease;white-space:nowrap;}
-.hero-node:hover .tag,.hero-node:focus .tag{color:#eaf7ff;border-color:rgba(120,230,255,.7);background:rgba(16,30,48,.85);box-shadow:0 0 18px rgba(96,225,255,.3);}
-.hero-node:hover .dot,.hero-node:focus .dot{background:#4dd0e1;border-color:#bdf3ff;box-shadow:0 0 22px rgba(120,235,255,.9);}
-.hero-node.is-lit .dot{background:#4dd0e1;border-color:#d5f8ff;box-shadow:0 0 26px rgba(140,240,255,1);}
-.hero-node.is-lit .tag{color:#f0fbff;border-color:rgba(140,235,255,.75);box-shadow:0 0 16px rgba(96,225,255,.35);}
+.hero-title{position:absolute;left:0;right:0;top:13%;transform:translateY(-50%);text-align:center;pointer-events:none;padding:0 1rem;}
+.hero-eyebrow{color:#3f5d85;font-size:.72rem;letter-spacing:.5em;margin-bottom:1rem;font-weight:600;}
+.hero-title h1{color:#e8f4ff;font-size:clamp(1.8rem,5vw,3.6rem);font-weight:700;letter-spacing:.22em;margin:0;text-shadow:0 0 34px rgba(77,208,225,.5);}
+.hero-title .sub{color:#4dd0e1;font-size:clamp(.8rem,1.5vw,1rem);margin-top:.9rem;letter-spacing:.2em;text-shadow:0 0 14px rgba(77,208,225,.4);}
+.hero-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;gap:.45rem;padding:1.1rem 1.5rem 1rem;min-width:190px;text-decoration:none;z-index:2;border:1px solid rgba(120,180,255,.22);border-radius:16px;background:linear-gradient(160deg,rgba(14,22,38,.75),rgba(8,13,24,.55));backdrop-filter:blur(10px);box-shadow:0 6px 24px rgba(0,0,0,.35);transition:transform .4s cubic-bezier(.2,.8,.3,1.2),border-color .35s ease,box-shadow .35s ease,background .35s ease;}
+.hero-node .idx{font-size:.6rem;letter-spacing:.42em;color:#3f5d85;font-weight:600;}
+.hero-node .tag{font-size:1.3rem;color:#eaf4ff;letter-spacing:.12em;font-weight:700;padding:0;border:none;background:none;white-space:nowrap;text-shadow:0 0 16px rgba(77,208,225,.3);}
+.hero-node .desc{font-size:.7rem;color:#6d8ab5;letter-spacing:.1em;white-space:nowrap;}
+.hero-node:hover,.hero-node:focus{transform:translate(-50%,-50%) scale(1.07);border-color:rgba(120,230,255,.75);background:linear-gradient(160deg,rgba(20,34,56,.9),rgba(10,18,32,.75));box-shadow:0 10px 34px rgba(0,0,0,.5),0 0 26px rgba(96,225,255,.22);outline:none;}
+.hero-node:hover .tag,.hero-node:focus .tag{color:#fff;}
+.hero-node.is-lit{border-color:rgba(140,235,255,.8);box-shadow:0 10px 34px rgba(0,0,0,.5),0 0 30px rgba(96,225,255,.4);}
+.hero-node.is-lit .tag{color:#fff;text-shadow:0 0 20px rgba(140,240,255,.7);}
 .scroll-hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:#54719e;font-size:.66rem;letter-spacing:.42em;z-index:2;pointer-events:none;}
 .scroll-hint .chev{width:14px;height:14px;border-right:1.5px solid #54719e;border-bottom:1.5px solid #54719e;transform:rotate(45deg);animation:hintFloat 2.2s ease-in-out infinite;}
 @keyframes hintFloat{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.45;}50%{transform:rotate(45deg) translate(5px,5px);opacity:1;}}
@@ -30,12 +30,14 @@ nav_order: 0
 .rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease;}
 .rv-in{opacity:1;transform:none;}
 @media (max-width:640px){
-  .hero-wrap{height:calc(100vh - 52px);min-height:480px;}
-  .hero-title{top:40%;}
+  .hero-wrap{height:calc(100vh - 52px);min-height:520px;}
+  .hero-title{top:11%;}
   .hero-eyebrow{letter-spacing:.3em;}
   .hero-title .motto{display:none;}
-  .hero-node .tag{font-size:.68rem;padding:2px 8px;}
-  .hero-node .dot{width:10px;height:10px;}
+  .hero-node{min-width:0;padding:.55rem .8rem .5rem;gap:.2rem;}
+  .hero-node .idx{font-size:.5rem;letter-spacing:.28em;}
+  .hero-node .tag{font-size:.85rem;white-space:normal;}
+  .hero-node .desc{font-size:.58rem;white-space:normal;}
   .stat-num{font-size:1.8rem;}
 }
 @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none;}.scroll-hint .chev{animation:none;}}
@@ -49,12 +51,11 @@ nav_order: 0
     <div class="sub">从 0 到 1 的系统化学习路径</div>
     <div class="motto">CHAOS → STRUCTURE → VERIFY → RESET</div>
   </div>
-  <a class="hero-node" data-x="11" data-y="28" href="{{ '/01-basics/' | relative_url }}"><span class="dot"></span><span class="tag">认知地基</span></a>
-  <a class="hero-node" data-x="24" data-y="72" href="{{ '/02-trading/' | relative_url }}"><span class="dot"></span><span class="tag">交易基础</span></a>
-  <a class="hero-node" data-x="42" data-y="16" href="{{ '/03-strategies/' | relative_url }}"><span class="dot"></span><span class="tag">策略全集</span></a>
-  <a class="hero-node" data-x="60" data-y="78" href="{{ '/04-advanced/' | relative_url }}"><span class="dot"></span><span class="tag">进阶生态</span></a>
-  <a class="hero-node" data-x="79" data-y="24" href="{{ '/05-practice/' | relative_url }}"><span class="dot"></span><span class="tag">实战复盘</span></a>
-  <a class="hero-node" data-x="90" data-y="60" href="{{ '/06-indicators/' | relative_url }}"><span class="dot"></span><span class="tag">指标大全</span></a>
+  <a class="hero-node" data-x="13" data-y="56" href="{{ '/01-basics/' | relative_url }}"><span class="idx">01 / COURSES</span><span class="tag">学习路径</span><span class="desc">五阶段 · 44 篇系统教程</span></a>
+  <a class="hero-node" data-x="34" data-y="32" href="{{ '/03-strategies/' | relative_url }}"><span class="idx">02 / STRATEGIES</span><span class="tag">策略目录</span><span class="desc">趋势 · 网格 · 套利 · 对冲</span></a>
+  <a class="hero-node" data-x="50" data-y="70" href="{{ '/lab/' | relative_url }}"><span class="idx">03 / LAB</span><span class="tag">实盘分析室</span><span class="desc">实时行情 · 上传复盘 · 训练画像</span></a>
+  <a class="hero-node" data-x="68" data-y="32" href="{{ '/05-practice/journal/' | relative_url }}"><span class="idx">04 / JOURNAL</span><span class="tag">交易日志</span><span class="desc">AI 教练 40 秒深度点评</span></a>
+  <a class="hero-node" data-x="88" data-y="56" href="{{ '/05-practice/01-paper-trading' | relative_url }}"><span class="idx">05 / TRAINING</span><span class="tag">模拟盘训练</span><span class="desc">零风险练手 · 验证策略</span></a>
   <div class="scroll-hint"><span>SCROLL TO EXPLORE</span><span class="chev"></span></div>
 </div>
 <script src="{{ '/hero-animation.js' | relative_url }}"></script>
@@ -78,9 +79,16 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 </script>
 
-> 上方的六个发光节点就是学习地图：扫描光束周期性扫过整个网络——被光照亮的，就是此刻值得你专注的部分。点击任意节点直接进入对应阶段；移动鼠标可以扰动粒子。
+> 首屏的五个玻璃卡片就是系统的五大功能区：学习路径、策略目录、实盘分析室、交易日志、模拟盘训练。粒子网络中的扫描光束周期性扫过——被照亮的就是此刻值得专注的模块。点击任意卡片进入；移动鼠标可以扰动粒子。
 
-## 学习阶段
+## 五大功能区
+1. [学习路径](01-basics/)——五阶段 44 篇教程，从认知到实战
+2. [策略目录](03-strategies/)——趋势、突破、网格、定投、套利、对冲等 11 种策略
+3. [实盘分析室](lab/)——实时行情 + 上传实盘记录 + 训练你的交易画像
+4. [交易日志](05-practice/journal/)——AI 教练 40 秒深度点评
+5. [指标与理论大全](06-indicators/)——22 个技术指标与理论词条
+
+## 全部学习阶段
 1. [第一阶段：认知地基](01-basics/)
 2. [第二阶段：交易基础](02-trading/)
 3. [第三阶段：交易策略全集](03-strategies/)
