@@ -1,0 +1,78 @@
+name: 交易日志 AI 点评
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  issues: write
+
+jobs:
+  analyze:
+    # 只有带「交易日志」标签的 issue 才会触发分析
+    if: contains(github.event.issue.labels.*.name, '交易日志')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 保存交易内容
+        run: |
+          cat > /tmp/journal.md <<'JOURNAL_EOF'
+          ${{ github.event.issue.body }}
+          JOURNAL_EOF
+
+      - name: 调用 DeepSeek 分析
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+
+          with open('/tmp/journal.md', encoding='utf-8') as f:
+              journal = f.read()
+
+          system = (
+              "你是一位极其耐心的虚拟货币交易教练，专门教学0基础学员。"
+              "请用初学者能理解的语言，从消息面和技术面两个角度分析学员的交易想法，"
+              "指出其中的逻辑漏洞和可取之处，并给出具体的改进建议。"
+              "不要只说'对'或'错'，要解释'为什么'。"
+              "回复使用 Markdown 格式，控制在 500 字以内。"
+          )
+
+          payload = {
+              "model": "deepseek-flash",
+              "messages": [
+                  {"role": "system", "content": system},
+                  {"role": "user", "content": "我的交易记录：\n" + journal + "\n\n请帮我分析。"},
+              ],
+              "stream": False,
+          }
+
+          req = urllib.request.Request(
+              "https://api.deepseek.com/chat/completions",
+              data=json.dumps(payload).encode("utf-8"),
+              headers={
+                  "Authorization": "Bearer " + os.environ["DEEPSEEK_API_KEY"],
+                  "Content-Type": "application/json",
+              },
+          )
+          try:
+              with urllib.request.urlopen(req, timeout=150) as resp:
+                  data = json.load(resp)
+              analysis = data["choices"][0]["message"]["content"].strip()
+          except Exception as e:
+              analysis = "AI 分析暂时失败（%s）。交易内容已完整保存，稍后可手动让我重新分析。" % e
+
+          with open('/tmp/analysis.md', 'w', encoding='utf-8') as f:
+              f.write("## 🧠 AI 教练点评\n\n" + analysis)
+          PY
+
+      - name: 发布点评到日志
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          echo "" >> /tmp/analysis.md
+          echo "---" >> /tmp/analysis.md
+          echo "*由 DeepSeek（deepseek-flash）生成，仅供参考，不构成投资建议*" >> /tmp/analysis.md
+          gh issue comment "$ISSUE_NUMBER" --repo "$REPO" --body-file /tmp/analysis.md
