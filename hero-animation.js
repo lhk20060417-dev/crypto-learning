@@ -10,9 +10,9 @@
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var CFG = {
-    density: 24000,
-    maxParticles: 150,
-    linkDist: 115,
+    density: 15000,
+    maxParticles: 220,
+    linkDist: 130,
     beamWidth: 100,
     beamSpeed: 1.5,
     trailAlpha: 0.2,
