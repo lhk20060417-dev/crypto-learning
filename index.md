@@ -11,7 +11,7 @@ nav_order: 0
 .hero-eyebrow{color:#3f5d85;font-size:.72rem;letter-spacing:.5em;margin-bottom:1rem;font-weight:600;}
 .hero-title h1{color:#e8f4ff;font-size:clamp(1.8rem,5vw,3.6rem);font-weight:700;letter-spacing:.22em;margin:0;text-shadow:0 0 34px rgba(77,208,225,.5);}
 .hero-title .sub{color:#4dd0e1;font-size:clamp(.8rem,1.5vw,1rem);margin-top:.9rem;letter-spacing:.2em;text-shadow:0 0 14px rgba(77,208,225,.4);}
-.hero-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;gap:.45rem;padding:1.1rem 1.5rem 1rem;min-width:190px;text-decoration:none;z-index:2;border:1px solid rgba(120,180,255,.22);border-radius:16px;background:linear-gradient(160deg,rgba(14,22,38,.75),rgba(8,13,24,.55));backdrop-filter:blur(10px);box-shadow:0 6px 24px rgba(0,0,0,.35);transition:transform .4s cubic-bezier(.2,.8,.3,1.2),border-color .35s ease,box-shadow .35s ease,background .35s ease;}
+.hero-node{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;gap:.45rem;padding:1.1rem 1.5rem 1rem;min-width:190px;text-decoration:none;z-index:2;border:1px solid rgba(120,180,255,.22);border-radius:16px;background:radial-gradient(260px circle at var(--mx,50%) var(--my,-20%),rgba(96,225,255,.13),transparent 65%),linear-gradient(160deg,rgba(14,22,38,.75),rgba(8,13,24,.55));backdrop-filter:blur(10px);box-shadow:0 6px 24px rgba(0,0,0,.35);transition:transform .4s cubic-bezier(.2,.8,.3,1.2),border-color .35s ease,box-shadow .35s ease,background .35s ease;animation:cardIn 1s cubic-bezier(.2,.8,.25,1) backwards;animation-delay:var(--d,.5s);}
 .hero-node .idx{font-size:.6rem;letter-spacing:.42em;color:#3f5d85;font-weight:600;}
 .hero-node .tag{font-size:1.3rem;color:#eaf4ff;letter-spacing:.12em;font-weight:700;padding:0;border:none;background:none;white-space:nowrap;text-shadow:0 0 16px rgba(77,208,225,.3);}
 .hero-node .desc{font-size:.7rem;color:#6d8ab5;letter-spacing:.1em;white-space:nowrap;}
@@ -22,6 +22,18 @@ nav_order: 0
 .scroll-hint{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:#54719e;font-size:.66rem;letter-spacing:.42em;z-index:2;pointer-events:none;}
 .scroll-hint .chev{width:14px;height:14px;border-right:1.5px solid #54719e;border-bottom:1.5px solid #54719e;transform:rotate(45deg);animation:hintFloat 2.2s ease-in-out infinite;}
 @keyframes hintFloat{0%,100%{transform:rotate(45deg) translate(0,0);opacity:.45;}50%{transform:rotate(45deg) translate(5px,5px);opacity:1;}}
+/* 入场动画：先建立画面（入场） */
+@keyframes titleIn{from{opacity:0;transform:translateY(calc(-50% + 36px));filter:blur(6px);}to{opacity:1;transform:translateY(-50%);filter:blur(0);}}
+@keyframes riseIn{from{opacity:0;transform:translateY(30px);filter:blur(5px);}to{opacity:1;transform:translateY(0);filter:blur(0);}}
+@keyframes cardIn{from{opacity:0;transform:translate(-50%,-44%) scale(.9);filter:blur(5px);}to{opacity:1;transform:translate(-50%,-50%) scale(1);filter:blur(0);}}
+@keyframes hintIn{from{opacity:0;}to{opacity:1;}}
+.hero-title{animation:titleIn 1.1s cubic-bezier(.2,.8,.25,1) backwards .15s;}
+.hero-eyebrow{animation:riseIn .9s cubic-bezier(.2,.8,.25,1) backwards .55s;}
+.hero-title h1{animation:riseIn 1s cubic-bezier(.2,.8,.25,1) backwards .7s;}
+.hero-title .sub{animation:riseIn 1s cubic-bezier(.2,.8,.25,1) backwards .9s;}
+.hero-title .motto{animation:riseIn 1s cubic-bezier(.2,.8,.25,1) backwards 1.05s;}
+.scroll-hint{animation:hintIn 1s ease backwards 1.6s;}
+.stats-band{animation:riseIn 1s cubic-bezier(.2,.8,.25,1) backwards .3s;}
 .stats-band{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:rgba(90,140,220,.14);border:1px solid rgba(90,140,220,.14);border-radius:14px;overflow:hidden;margin:2.2rem 0;}
 .stat-cell{background:#0a101c;padding:1.8rem 1rem;text-align:center;}
 .stat-num{color:#e8f4ff;font-size:2.4rem;font-weight:700;letter-spacing:.02em;text-shadow:0 0 18px rgba(77,208,225,.35);}
@@ -40,7 +52,7 @@ nav_order: 0
   .hero-node .desc{font-size:.58rem;white-space:normal;}
   .stat-num{font-size:1.8rem;}
 }
-@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none;}.scroll-hint .chev{animation:none;}}
+@media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none;}.scroll-hint .chev{animation:none;}.hero-title,.hero-eyebrow,.hero-title h1,.hero-title .sub,.hero-title .motto,.hero-node,.scroll-hint,.stats-band{animation:none!important;opacity:1!important;filter:none!important;}}
 </style>
 
 <div class="hero-wrap">
@@ -51,11 +63,11 @@ nav_order: 0
     <div class="sub">从 0 到 1 的系统化学习路径</div>
     <div class="motto">CHAOS → STRUCTURE → VERIFY → RESET</div>
   </div>
-  <a class="hero-node" data-x="13" data-y="56" href="{{ '/01-basics/' | relative_url }}"><span class="idx">01 / COURSES</span><span class="tag">学习路径</span><span class="desc">五阶段 · 44 篇系统教程</span></a>
-  <a class="hero-node" data-x="34" data-y="32" href="{{ '/03-strategies/' | relative_url }}"><span class="idx">02 / STRATEGIES</span><span class="tag">策略目录</span><span class="desc">趋势 · 网格 · 套利 · 对冲</span></a>
-  <a class="hero-node" data-x="50" data-y="70" href="{{ '/lab/' | relative_url }}"><span class="idx">03 / LAB</span><span class="tag">实盘分析室</span><span class="desc">实时行情 · 上传复盘 · 训练画像</span></a>
-  <a class="hero-node" data-x="68" data-y="32" href="{{ '/05-practice/journal/' | relative_url }}"><span class="idx">04 / JOURNAL</span><span class="tag">交易日志</span><span class="desc">AI 教练 40 秒深度点评</span></a>
-  <a class="hero-node" data-x="88" data-y="56" href="{{ '/05-practice/01-paper-trading' | relative_url }}"><span class="idx">05 / TRAINING</span><span class="tag">模拟盘训练</span><span class="desc">零风险练手 · 验证策略</span></a>
+  <a class="hero-node" data-x="13" data-y="56" data-depth="0.30" style="--d:.55s" href="{{ '/01-basics/' | relative_url }}"><span class="idx">01 / COURSES</span><span class="tag">学习路径</span><span class="desc">五阶段 · 44 篇系统教程</span></a>
+  <a class="hero-node" data-x="34" data-y="32" data-depth="0.24" style="--d:.68s" href="{{ '/03-strategies/' | relative_url }}"><span class="idx">02 / STRATEGIES</span><span class="tag">策略目录</span><span class="desc">趋势 · 网格 · 套利 · 对冲</span></a>
+  <a class="hero-node" data-x="50" data-y="70" data-depth="0.34" style="--d:.81s" href="{{ '/lab/' | relative_url }}"><span class="idx">03 / LAB</span><span class="tag">实盘分析室</span><span class="desc">实时行情 · 上传复盘 · 训练画像</span></a>
+  <a class="hero-node" data-x="68" data-y="32" data-depth="0.24" style="--d:.94s" href="{{ '/05-practice/journal/' | relative_url }}"><span class="idx">04 / JOURNAL</span><span class="tag">交易日志</span><span class="desc">AI 教练 40 秒深度点评</span></a>
+  <a class="hero-node" data-x="88" data-y="56" data-depth="0.30" style="--d:1.07s" href="{{ '/05-practice/01-paper-trading' | relative_url }}"><span class="idx">05 / TRAINING</span><span class="tag">模拟盘训练</span><span class="desc">零风险练手 · 验证策略</span></a>
   <div class="scroll-hint"><span>SCROLL TO EXPLORE</span><span class="chev"></span></div>
 </div>
 <script src="{{ '/hero-animation.js' | relative_url }}"></script>
@@ -76,6 +88,42 @@ document.addEventListener('DOMContentLoaded',function(){
     function step(t){if(!t0)t0=t;var p=Math.min((t-t0)/1400,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);}
     requestAnimationFrame(step);});},{threshold:.4});
   document.querySelectorAll('.count').forEach(function(el){co.observe(el);});
+
+  /* 视差滚动：前景卡片 > 标题 > 粒子背景，速度分层 */
+  var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hero=document.querySelector('.hero-wrap');
+  if(hero&&!reduced){
+    var cv=document.getElementById('hero-canvas'),
+        title=hero.querySelector('.hero-title'),
+        hint=hero.querySelector('.scroll-hint'),
+        cards=Array.prototype.slice.call(hero.querySelectorAll('.hero-node'));
+    cards.forEach(function(c){c._depth=parseFloat(c.getAttribute('data-depth')||'0.28');});
+    var ticking=false;
+    function parallax(){
+      if(ticking)return;ticking=true;
+      requestAnimationFrame(function(){
+        var y=window.scrollY||window.pageYOffset,h=hero.offsetHeight;
+        if(y<h&&y>=0){
+          cv.style.translate='0 '+(y*0.14)+'px';
+          title.style.translate='0 '+(y*0.40)+'px';
+          for(var i=0;i<cards.length;i++)cards[i].style.translate='0 '+(y*cards[i]._depth)+'px';
+          if(hint)hint.style.opacity=Math.max(0,1-y/280);
+        }
+        ticking=false;
+      });
+    }
+    window.addEventListener('scroll',parallax,{passive:true});
+
+    /* 微交互：卡片内跟随鼠标的聚光 */
+    cards.forEach(function(c){
+      c.addEventListener('pointermove',function(e){
+        var r=c.getBoundingClientRect();
+        c.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');
+        c.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%');
+      });
+      c.addEventListener('pointerleave',function(){c.style.setProperty('--my','-20%');});
+    });
+  }
 });
 </script>
 
